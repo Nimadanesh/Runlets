@@ -1,11 +1,11 @@
-import { Wordmark } from "./SiteHeader";
+import { Logo } from "./Logo";
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-border">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-16 md:flex-row md:items-start md:justify-between">
         <div>
-          <Wordmark />
+          <Logo />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
             Don&apos;t just show what you made. Start something.
           </p>

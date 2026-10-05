@@ -1,5 +1,16 @@
 import { SectionShell } from "./SectionShell";
-import { VisualPlaceholder } from "./VisualPlaceholder";
+import { ChainVisual } from "./visuals/ChainVisual";
+import { GapVisual } from "./visuals/GapVisual";
+import { HeroVisual } from "./visuals/HeroVisual";
+import { IdeaVisual } from "./visuals/IdeaVisual";
+import { LineageVisual } from "./visuals/LineageVisual";
+import { LoopVisual } from "./visuals/LoopVisual";
+import { MetamorphosisVisual } from "./visuals/MetamorphosisVisual";
+import { NetworkVisual } from "./visuals/NetworkVisual";
+import { PersonasVisual } from "./visuals/PersonasVisual";
+import { PipelineVisual } from "./visuals/PipelineVisual";
+import { StepsVisual } from "./visuals/StepsVisual";
+import { TwentyPercentVisual } from "./visuals/TwentyPercentVisual";
 
 /* ---------------------------------- 01 ---------------------------------- */
 
@@ -36,10 +47,7 @@ export function HeroSection() {
           No need to be a developer.
         </p>
         <div className="mt-16 w-full">
-          <VisualPlaceholder
-            label="hero — remix chain"
-            description="One creation card at left; an amber thread branches right into remixed variants, each slightly transformed. The thread, not the cards, is the hero."
-          />
+          <HeroVisual />
         </div>
       </div>
     </section>
@@ -82,10 +90,7 @@ export function IdeaSection() {
         Runlets gives them <span className="text-primary">somewhere to go.</span>
       </p>
       <div className="mt-12">
-        <VisualPlaceholder
-          label="idea — creations finding a home"
-          description="Scattered small creation-cards drift and converge toward a warm point of light. From dispersed to gathered."
-        />
+        <IdeaVisual />
       </div>
     </SectionShell>
   );
@@ -136,10 +141,7 @@ export function ProblemSection() {
         </li>
       </ul>
       <div className="mt-12">
-        <VisualPlaceholder
-          label="problem — the gap"
-          description="Two cliffs: 'I had an idea.' and 'I built a product.' A single amber bridge spans between them, labeled runlets."
-        />
+        <GapVisual />
       </div>
     </SectionShell>
   );
@@ -163,10 +165,7 @@ export function WhatIsSection() {
         <p className="text-foreground">Then let them take it further.</p>
       </div>
       <div className="mt-12">
-        <VisualPlaceholder
-          label="what-is — the pipeline"
-          description="Five cards in a flow — Play → Remix → Fork → Improve → Build on it — with a creation visibly transforming as it moves right."
-        />
+        <PipelineVisual />
       </div>
       <ol className="mt-8 flex flex-wrap gap-3">
         {pipeline.map((step) => (
@@ -230,10 +229,7 @@ export function HowItWorksSection() {
         ))}
       </div>
       <div className="mt-12">
-        <VisualPlaceholder
-          label="how-it-works — three panels"
-          description="Three connected panels, each with a minimal scene: a spark (make), a link going live (publish), a second pair of hands picking it up (remix)."
-        />
+        <StepsVisual />
       </div>
     </SectionShell>
   );
@@ -263,10 +259,7 @@ export function LoopSection() {
         Every creation can become the beginning of another creation.
       </p>
       <div className="mt-12">
-        <VisualPlaceholder
-          label="loop — the creation loop, alive"
-          description="A circular flow — IDEA → CREATE → PUBLISH → PLAY → REMIX → IMPROVE → SHARE → REMIX AGAIN — with a pulse traveling around it, spawning a new loop each lap."
-        />
+        <LoopVisual />
       </div>
       <ol className="mt-8 flex flex-wrap items-center gap-2">
         {loop.map((s, i) => (
@@ -318,10 +311,7 @@ export function LineageSection() {
         ))}
       </ul>
       <div className="mt-12">
-        <VisualPlaceholder
-          label="lineage — a creation's family tree"
-          description="A branching graph: one root node (the original) fanning into remixes, each node credited to its maker. Hovering a node highlights its whole ancestry."
-        />
+        <LineageVisual />
       </div>
       <p className="mt-10 max-w-2xl font-display text-2xl font-semibold text-foreground">
         Every creation has a lineage.{" "}
@@ -372,10 +362,7 @@ export function SmallIdeaSection() {
         ))}
       </div>
       <div className="mt-4">
-        <VisualPlaceholder
-          label="small-idea — one idea, many hands"
-          description="A vertical chain of five cards, each a visible evolution of the last — a simple game becoming richer as new hands touch it."
-        />
+        <ChainVisual />
       </div>
       <p className="mt-10 font-display text-2xl font-semibold text-foreground">
         One idea. Many creators.{" "}
@@ -423,10 +410,7 @@ export function WhoSection() {
         ))}
       </ul>
       <div className="mt-12">
-        <VisualPlaceholder
-          label="who — six makers, six starting points"
-          description="Six portrait-free cards, each with a tiny abstract glyph of what that persona makes — a lesson, a story, a prototype, a hack, an oddity, a seed."
-        />
+        <PersonasVisual />
       </div>
     </SectionShell>
   );
@@ -456,10 +440,7 @@ export function NotOnlyDevsSection() {
         </p>
       </div>
       <div className="mt-12">
-        <VisualPlaceholder
-          label="20-percent — you start it, the network finishes it"
-          description="A progress bar filled 20% in amber ('you make the first 20%'), the remaining 80% filling in as ghosted contributor-segments join — the network taking it further."
-        />
+        <TwentyPercentVisual />
       </div>
       <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2">
         <div className="bg-card p-8">
@@ -506,10 +487,7 @@ export function NetworkSection() {
         <p>Every creator adds another connection.</p>
       </div>
       <div className="mt-12">
-        <VisualPlaceholder
-          label="network — constellations of creations"
-          description="A living constellation: nodes are creations (not people), edges are remixes. It densifies as you watch — more making → more discovering → more remixing."
-        />
+        <NetworkVisual />
       </div>
       <div className="mt-10 space-y-2 text-lg text-muted-foreground">
         <p>The more things people make, the more there is to discover.</p>
@@ -556,10 +534,7 @@ export function BigIdeaSection() {
         And a simple idea can become something nobody expected.
       </p>
       <div className="mt-12">
-        <VisualPlaceholder
-          label="big-idea — metamorphosis"
-          description="One shape morphing through four states — experiment → game → tool → product — each stage more resolved than the last, same amber DNA throughout."
-        />
+        <MetamorphosisVisual />
       </div>
       <p className="mt-12 font-display text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
         Don&apos;t just show what you made.{" "}

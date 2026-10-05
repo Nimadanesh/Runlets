@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 80" fill="none" role="img" aria-label="Runlets mark">
+  <defs>
+    <linearGradient id="rl-tile" x1="6" y1="10" x2="66" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFD166"/>
+      <stop offset="0.55" stop-color="#FF9E2C"/>
+      <stop offset="1" stop-color="#F97B1D"/>
+    </linearGradient>
+    <linearGradient id="rl-bars" x1="74" y1="18" x2="102" y2="62" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFB224"/>
+      <stop offset="1" stop-color="#FF7A1A"/>
+    </linearGradient>
+  </defs>
+  <g transform="rotate(-8 36 40)">
+    <rect x="6" y="10" width="60" height="60" rx="17" fill="url(#rl-tile)"/>
+    <path d="M36 26c1.6 9.6 4.4 12.4 14 14-9.6 1.6-12.4 4.4-14 14-1.6-9.6-4.4-12.4-14-14 9.6-1.6 12.4-4.4 14-14Z" fill="#171106"/>
+  </g>
+  <rect x="74" y="20" width="11" height="42" rx="5.5" fill="url(#rl-bars)"/>
+  <rect x="91" y="28" width="11" height="26" rx="5.5" fill="url(#rl-bars)" opacity="0.8"/>
+</svg>

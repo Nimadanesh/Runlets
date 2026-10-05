@@ -111,8 +111,10 @@ Dark-first: `:root` carries the dark values. No light theme.
 
 | Component | Path | Variants | Notes |
 | --------- | ---- | -------- | ----- |
-| `SectionShell` | `src/components/landing/SectionShell.tsx` | `default` | Eyebrow (`01 — HERO`) + title + children; hairline top divider |
-| `VisualPlaceholder` | `src/components/landing/VisualPlaceholder.tsx` | `default` | Dashed hairline box, mono `[visual: …]` label describing the intended bespoke visual |
+| `Logo` | `src/components/landing/Logo.tsx` | `default` | Brand lockup: recreated SVG mark (`public/images/runlets-mark.svg`, ember-amber) + `runlets` wordmark in Space Grotesk Bold |
+| `SectionShell` | `src/components/landing/SectionShell.tsx` | `default` | Eyebrow (`01 — HERO`) + title + children; hairline top divider; scroll-reveal |
+| `VisualFrame` | `src/components/landing/visuals/VisualFrame.tsx` | `default` | Shared container for bespoke visuals + mono caption |
+| `Reveal` | `src/components/landing/Reveal.tsx` | `default` | IntersectionObserver fade-up; `data-reveal` + noscript fallback |
 
 ## Content Guidelines
 

@@ -144,3 +144,46 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Bespoke visual motion — gentle, ambient, never bouncy. */
+@keyframes v-float {
+  from {
+    transform: translateY(-6px);
+  }
+  to {
+    transform: translateY(6px);
+  }
+}
+@keyframes v-dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+@keyframes v-pulse-soft {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+.v-float {
+  animation: v-float 7s ease-in-out infinite alternate;
+}
+.v-dash {
+  animation: v-dash 1.4s linear infinite;
+}
+.v-pulse-soft {
+  animation: v-pulse-soft 3.2s ease-in-out infinite;
+}
+@keyframes v-orbit {
+  to {
+    stroke-dashoffset: -943;
+  }
+}
+.v-orbit {
+  animation: v-orbit 9s linear infinite;
+}

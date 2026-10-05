@@ -28,7 +28,7 @@
 - **Personality:** Quietly confident, warm, a spark of playfulness. Peer-to-peer, never salesy.
 - **Tone of copy:** Direct, plain-spoken, inspiring. Short sentences. (Copy supplied in English by navid.)
 - **Visual direction:** resend.com-anchored dark minimalism — typographic, hairline detail, one idea per viewport, a bespoke visual per section. `linear` recipe adapted: ember-amber accent instead of purple.
-- **Logo / assets:** No logo asset yet — musi designs a minimal `runlets` wordmark as part of the build.
+- **Logo / assets:** Recreated brand mark as vector SVG at `BT/public/images/runlets-mark.svg` (ember-amber gradient tile + spark + motion bars, from navid's supplied logo, recolored to brand palette). Lockup = mark + `runlets` wordmark in Space Grotesk Bold. Also wired as favicon.
 
 ## Product Surface
 
