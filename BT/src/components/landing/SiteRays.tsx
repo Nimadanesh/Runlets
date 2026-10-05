@@ -17,20 +17,22 @@ export function SiteRays() {
         }}
       />
       {/* angled beams */}
+      <div className="rays-sway absolute inset-x-0 top-0">
       <div
         className="absolute left-1/2 top-[-260px] h-[820px] w-[380px] -translate-x-[85%] rotate-[16deg] blur-3xl"
         style={{
           background:
-            "linear-gradient(180deg, rgba(255,255,255,0.055), transparent 75%)",
+            "linear-gradient(180deg, rgba(255,255,255,0.07), transparent 75%)",
         }}
       />
       <div
         className="absolute left-1/2 top-[-260px] h-[820px] w-[380px] -translate-x-[15%] rotate-[-16deg] blur-3xl"
         style={{
           background:
-            "linear-gradient(180deg, rgba(255,255,255,0.055), transparent 75%)",
+            "linear-gradient(180deg, rgba(255,255,255,0.07), transparent 75%)",
         }}
       />
+      </div>
       {/* floor fade into black */}
       <div
         className="absolute inset-x-0 top-[560px] h-[200px]"

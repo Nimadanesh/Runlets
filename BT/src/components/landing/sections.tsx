@@ -23,7 +23,7 @@ export function HeroSection() {
         </p>
         <h1 className="mt-8 max-w-4xl font-display text-5xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-7xl text-balance">
           Don&apos;t just show what you made.{" "}
-          <span className="text-primary">Start something.</span>
+          <span className="text-primary text-glow">Start something.</span>
         </h1>
         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
           Create with AI. Put it out there. Let other people play with it,
@@ -538,7 +538,7 @@ export function BigIdeaSection() {
       </div>
       <p className="mt-12 font-display text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
         Don&apos;t just show what you made.{" "}
-        <span className="text-primary">Start something.</span>
+        <span className="text-primary text-glow">Start something.</span>
       </p>
     </SectionShell>
   );

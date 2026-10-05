@@ -42,7 +42,8 @@ function MiniWindow({
 
 /**
  * Hero visual — the remix chain.
- * One creation on the left; amber threads branch right into remixed variants.
+ * One creation on the left; white threads branch right into remixed variants,
+ * with glow pulses traveling along each thread.
  */
 export function HeroVisual() {
   const variants = [
@@ -99,6 +100,40 @@ export function HeroVisual() {
             vectorEffect="non-scaling-stroke"
             opacity="0.65"
           />
+        </svg>
+        {/* traveling glow pulses along the threads */}
+        <svg
+          className="absolute inset-0 h-full w-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden
+        >
+          <defs>
+            <filter
+              id="heroGlowDot"
+              x="-80%"
+              y="-80%"
+              width="260%"
+              height="260%"
+            >
+              <feGaussianBlur stdDeviation="1.6" />
+            </filter>
+          </defs>
+          {[
+            { d: "M22 50 C 42 50, 55 18, 80 18", dur: "4.5s" },
+            { d: "M22 50 C 45 50, 55 50, 80 50", dur: "5.6s" },
+            { d: "M22 50 C 42 50, 55 82, 80 82", dur: "6.8s" },
+          ].map((t, i) => (
+            <g key={i} filter="url(#heroGlowDot)">
+              <circle r="1.5" fill="#FFFFFF" opacity="0.95">
+                <animateMotion
+                  dur={t.dur}
+                  repeatCount="indefinite"
+                  path={t.d}
+                />
+              </circle>
+            </g>
+          ))}
         </svg>
         {/* origin card */}
         <div className="absolute left-6 top-1/2 w-40 -translate-y-1/2 md:left-12 md:w-48">
