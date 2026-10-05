@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 80" fill="none" role="img" aria-label="Runlets mark">
+  <defs>
+    <linearGradient id="rls-tile" x1="6" y1="10" x2="66" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.38" stop-color="#D7D7DF"/>
+      <stop offset="0.52" stop-color="#8B8B96"/>
+      <stop offset="0.62" stop-color="#C9C9D3"/>
+      <stop offset="1" stop-color="#F2F2F6"/>
+    </linearGradient>
+    <linearGradient id="rls-bars" x1="74" y1="18" x2="102" y2="62" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#A9A9B4"/>
+      <stop offset="1" stop-color="#E4E4EA"/>
+    </linearGradient>
+  </defs>
+  <g transform="rotate(-8 36 40)">
+    <rect x="6" y="10" width="60" height="60" rx="17" fill="url(#rls-tile)"/>
+    <rect x="6" y="10" width="60" height="60" rx="17" fill="white" opacity="0.08"/>
+    <path d="M36 26c1.6 9.6 4.4 12.4 14 14-9.6 1.6-12.4 4.4-14 14-1.6-9.6-4.4-12.4-14-14 9.6-1.6 12.4-4.4 14-14Z" fill="#0A0A0C"/>
+  </g>
+  <rect x="74" y="20" width="11" height="42" rx="5.5" fill="url(#rls-bars)"/>
+  <rect x="91" y="28" width="11" height="26" rx="5.5" fill="url(#rls-bars)" opacity="0.85"/>
+</svg>

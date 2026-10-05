@@ -1,83 +1,35 @@
 import { VisualFrame } from "./VisualFrame";
 
-const stages = [
-  {
-    who: "a teacher",
-    what: "3 × 4 = ?",
-    detail: ["answer box"],
-  },
-  {
-    who: "someone",
-    what: "3 × 4 = ?",
-    detail: ["answer box", "score: 12"],
-  },
-  {
-    who: "another teacher",
-    what: "3 × 4 = ?",
-    detail: ["big buttons", "score: 12", "ages 6–8"],
-  },
-  {
-    who: "a designer",
-    what: "3 × 4 = ?",
-    detail: ["big buttons", "score + streak", "warm theme"],
-  },
-  {
-    who: "a developer",
-    what: "3 × 4 = ?",
-    detail: ["levels", "multiplayer", "dashboard"],
-  },
+const STAGES = [
+  { label: "idea", cls: "bg-[#17171b] ring-white/15", glow: false },
+  { label: "play", cls: "chrome-surface-dark ring-white/20", glow: false },
+  { label: "remix", cls: "ring-white/30", glow: false, style: { background: "linear-gradient(135deg, #6a6a75, #2c2c33 60%, #54545e)" } },
+  { label: "fork", cls: "chrome-surface ring-white/40", glow: false },
+  { label: "product", cls: "chrome-surface ring-white/60", glow: true },
 ];
 
 /**
- * Small-idea visual — one artifact, five pairs of hands.
- * The same little game, visibly growing richer down the chain.
+ * Chain visual — the polishing relay.
+ * Five hands, five passes: from rough rock to mirror.
  */
 export function ChainVisual() {
   return (
-    <VisualFrame caption="the same multiplication game — five pairs of hands later.">
-      <div className="mx-auto max-w-md px-6 py-10">
-        <div className="relative">
-          <div
-            className="absolute bottom-6 left-1/2 top-6 w-px -translate-x-1/2 bg-border"
-            aria-hidden
-          />
-          <div
-            className="absolute left-1/2 top-6 w-px -translate-x-1/2 bg-primary"
-            style={{ height: "calc(100% - 3rem)" }}
-            aria-hidden
-          />
-          <div className="relative space-y-5">
-            {stages.map((s, i) => (
+    <VisualFrame caption="every hand polishes. rough in, mirror out.">
+      <div className="relative px-6 py-14 md:px-14">
+        {/* light thread */}
+        <div className="absolute left-10 right-10 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-white/40 to-transparent md:left-16 md:right-16" aria-hidden />
+        <div className="relative flex items-center justify-between">
+          {STAGES.map((s) => (
+            <div key={s.label} className="flex flex-col items-center gap-4">
               <div
-                key={s.who}
-                className="relative rounded-xl border border-border bg-[#101014] p-4"
-                style={{ marginLeft: `${i * 10}px`, marginRight: `${(stages.length - 1 - i) * 10}px` }}
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <p className="font-display text-sm font-semibold text-foreground">
-                    {s.what}
-                  </p>
-                  <p className="shrink-0 font-mono text-[10px] text-muted-foreground">
-                    {s.who}
-                  </p>
-                </div>
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {s.detail.map((d) => (
-                    <span
-                      key={d}
-                      className={`rounded-full px-2.5 py-1 font-mono text-[10px] ${
-                        i === stages.length - 1
-                          ? "bg-primary/15 text-primary"
-                          : "bg-secondary text-muted-foreground"
-                      }`}
-                    >
-                      {d}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+                className={`h-16 w-16 rounded-full ring-1 md:h-20 md:w-20 ${s.cls} ${
+                  s.glow ? "shadow-[0_0_60px_-6px_rgba(237,237,242,0.65)]" : "shadow-[0_8px_24px_rgba(0,0,0,0.5)]"
+                }`}
+                style={s.style}
+              />
+              <span className="font-mono text-[11px] tracking-[0.2em] text-white/55">{s.label}</span>
+            </div>
+          ))}
         </div>
       </div>
     </VisualFrame>

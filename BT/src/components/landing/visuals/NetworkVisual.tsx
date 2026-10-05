@@ -1,95 +1,59 @@
 import { VisualFrame } from "./VisualFrame";
 
-// Nodes are creations (not people). Edges are remixes.
-const NODES: Array<[number, number, boolean]> = [
-  // [x, y, highlighted]
-  [120, 90, true],
-  [250, 50, false],
-  [380, 80, false],
-  [520, 60, true],
-  [660, 110, false],
-  [90, 220, false],
-  [230, 180, false],
-  [360, 210, true],
-  [500, 180, false],
-  [640, 230, false],
-  [170, 320, false],
-  [330, 300, false],
-  [480, 320, true],
-  [620, 330, false],
-];
+function rand(seed: number) {
+  let t = seed + 0x6d2b79f5;
+  t = Math.imul(t ^ (t >>> 15), t | 1);
+  t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+}
 
-const EDGES: Array<[number, number]> = [
-  [0, 1], [1, 2], [2, 3], [3, 4],
-  [0, 5], [1, 6], [2, 7], [3, 8], [4, 9],
-  [5, 6], [6, 7], [7, 8], [8, 9],
-  [5, 10], [6, 11], [7, 11], [8, 12], [9, 13],
-  [10, 11], [11, 12], [12, 13],
-  [1, 7], [3, 7], [7, 12],
-];
+const STARS = Array.from({ length: 42 }, (_, i) => ({
+  x: rand(i * 7 + 1) * 400,
+  y: rand(i * 13 + 5) * 340,
+  r: 0.8 + rand(i * 3 + 9) * 1.6,
+  delay: rand(i * 5 + 2) * 3.4,
+}));
+
+const NEIGHBORS = [15, 60, 105, 150, 200, 250, 300, 340].map((deg, i) => {
+  const a = (deg * Math.PI) / 180;
+  const d = 74 + (i % 3) * 18;
+  return { x: 200 + Math.cos(a) * d, y: 170 + Math.sin(a) * d * 0.82 };
+});
 
 /**
- * Network visual — a constellation where nodes are creations, not people.
- * Amber nodes are the ones taking off right now.
+ * Network visual — the star chart.
+ * Every creation is a star. Runlets is the bright one they all orbit.
  */
 export function NetworkVisual() {
   return (
-    <VisualFrame caption="every node is a creation. every edge is a remix. watch it densify.">
-      <svg
-        viewBox="0 0 740 390"
-        className="block h-auto w-full"
-        role="img"
-        aria-label="Network of creations connected by remix edges"
-      >
-        {EDGES.map(([a, b], i) => (
-          <line
-            key={i}
-            x1={NODES[a][0]}
-            y1={NODES[a][1]}
-            x2={NODES[b][0]}
-            y2={NODES[b][1]}
-            stroke={
-              NODES[a][2] || NODES[b][2]
-                ? "rgba(255,178,36,0.45)"
-                : "rgba(255,255,255,0.10)"
-            }
-            strokeWidth="1.5"
-          />
-        ))}
-        {NODES.map(([x, y, hot], i) => (
-          <g key={i}>
-            {hot && (
-              <circle
-                cx={x}
-                cy={y}
-                r="16"
-                fill="none"
-                stroke="#FFFFFF"
-                strokeWidth="1"
-                opacity="0.5"
-                className="v-pulse-soft"
-                style={{ animationDelay: `${i * 0.4}s` }}
-              />
-            )}
-            <rect
-              x={x - 9}
-              y={y - 9}
-              width="18"
-              height="18"
-              rx="5"
-              fill={hot ? "#FFFFFF" : "#16161C"}
-              stroke={hot ? "#FFFFFF" : "rgba(255,255,255,0.2)"}
-              strokeWidth="1.5"
-            />
-            {hot && (
-              <path
-                d={`M${x} ${y - 4}c.4 2.4 1.1 3.1 3.5 3.5-2.4.4-3.1 1.1-3.5 3.5-.4-2.4-1.1-3.1-3.5-3.5 2.4-.4 3.1-1.1 3.5-3.5Z`}
-                fill="#000000"
-              />
-            )}
-          </g>
-        ))}
-      </svg>
+    <VisualFrame caption="a sky full of made things — runlets is the bright star.">
+      <div className="relative h-[340px] overflow-hidden">
+        <svg viewBox="0 0 400 340" className="absolute inset-0 h-full w-full" aria-hidden>
+          <defs>
+            <filter id="starGlow" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="6" />
+            </filter>
+          </defs>
+          {STARS.map((s, i) => (
+            <circle key={i} cx={s.x} cy={s.y} r={s.r} fill="#ffffff" className="twinkle" style={{ animationDelay: `${s.delay}s` }} />
+          ))}
+          {/* constellation lines */}
+          {NEIGHBORS.map((n, i) => (
+            <line key={i} x1="200" y1="170" x2={n.x} y2={n.y} stroke="rgba(255,255,255,0.16)" strokeWidth="1" />
+          ))}
+          {NEIGHBORS.map((n, i) => (
+            <circle key={`n${i}`} cx={n.x} cy={n.y} r="3.4" fill="#ededf2" opacity="0.85" />
+          ))}
+          {/* the bright star */}
+          <circle cx="200" cy="170" r="26" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
+          <circle cx="200" cy="170" r="46" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+          <circle cx="200" cy="170" r="14" fill="#ffffff" filter="url(#starGlow)" />
+          <circle cx="200" cy="170" r="7" fill="#ffffff" />
+          <rect x="197.5" y="138" width="5" height="64" fill="#ffffff" opacity="0.5" filter="url(#starGlow)" />
+          <rect x="168" y="167.5" width="64" height="5" fill="#ffffff" opacity="0.5" filter="url(#starGlow)" />
+          <text x="200" y="232" textAnchor="middle" fill="#ededf2" fontSize="12" fontFamily="monospace" letterSpacing="4">runlets</text>
+        </svg>
+      </div>
     </VisualFrame>
   );
 }

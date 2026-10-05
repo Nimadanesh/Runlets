@@ -3,121 +3,94 @@
 import { useState } from "react";
 import { VisualFrame } from "./VisualFrame";
 
-interface Node {
-  id: string;
-  title: string;
-  author: string;
-  x: number;
-  y: number;
-  parent: string | null;
-}
+type Node = { id: string; x: number; y: number; label: string; parent: string | null };
 
 const NODES: Node[] = [
-  { id: "n0", title: "multiplication game", author: "@teacher-ali", x: 30, y: 172, parent: null },
-  { id: "n1", title: "smoother v2", author: "@sara", x: 300, y: 52, parent: "n0" },
-  { id: "n2", title: "junior version", author: "@mrs-karimi", x: 300, y: 172, parent: "n0" },
-  { id: "n3", title: "dark mode", author: "@kenji", x: 300, y: 292, parent: "n0" },
-  { id: "n4", title: "classroom edition", author: "@sara", x: 570, y: 22, parent: "n1" },
-  { id: "n5", title: "with sounds", author: "@dev-reza", x: 570, y: 142, parent: "n2" },
+  { id: "root", x: 200, y: 180, label: "you", parent: null },
+  { id: "a", x: 200, y: 88, label: "@sara", parent: "root" },
+  { id: "b", x: 280, y: 226, label: "@kenji", parent: "root" },
+  { id: "c", x: 120, y: 226, label: "@maya", parent: "root" },
+  { id: "a1", x: 104, y: 42, label: "@leo", parent: "a" },
+  { id: "a2", x: 296, y: 42, label: "@nia", parent: "a" },
+  { id: "b1", x: 367, y: 165, label: "@omar", parent: "b" },
+  { id: "b2", x: 271, y: 332, label: "@iva", parent: "b" },
+  { id: "c1", x: 129, y: 332, label: "@rex", parent: "c" },
+  { id: "c2", x: 33, y: 165, label: "@zoe", parent: "c" },
 ];
 
-const W = 170;
-const H = 60;
+const BY_ID = Object.fromEntries(NODES.map((n) => [n.id, n]));
 
-function ancestors(id: string): string[] {
-  const chain: string[] = [id];
-  let cur = NODES.find((n) => n.id === id);
+function ancestors(id: string): Set<string> {
+  const s = new Set<string>([id]);
+  let cur = BY_ID[id];
   while (cur?.parent) {
-    chain.push(cur.parent);
-    cur = NODES.find((n) => n.id === cur!.parent);
+    s.add(cur.parent);
+    cur = BY_ID[cur.parent];
   }
-  return chain;
+  return s;
 }
 
 /**
- * Lineage visual — a creation's family tree.
- * Hover any node to light up its whole ancestry: nobody disappears
- * from the story.
+ * Lineage visual — the silver bloodline.
+ * A radial pedigree: hover any descendant and its whole bloodline lights up.
  */
 export function LineageVisual() {
-  const [hovered, setHovered] = useState<string | null>(null);
-  const hot = hovered ? new Set(ancestors(hovered)) : null;
+  const [active, setActive] = useState<string | null>(null);
+  const lit = active ? ancestors(active) : new Set<string>(["root"]);
 
-  const edgePath = (a: Node, b: Node) => {
-    const x1 = a.x + W;
-    const y1 = a.y + H / 2;
-    const x2 = b.x;
-    const y2 = b.y + H / 2;
-    const mx = (x1 + x2) / 2;
-    return `M${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`;
+  const edge = (n: Node) => {
+    const p = BY_ID[n.parent!];
+    const mx = (p.x + n.x) / 2;
+    const my = (p.y + n.y) / 2;
+    return `M ${p.x} ${p.y} Q ${mx} ${my} ${n.x} ${n.y}`;
   };
 
   return (
-    <VisualFrame caption="hover a remix — its whole ancestry lights up. nobody disappears from the story.">
-      <div className="overflow-x-auto px-4 py-8">
-        <svg
-          viewBox="0 0 770 380"
-          className="h-auto min-w-[640px] w-full"
-          role="img"
-          aria-label="Family tree of a runlet: original and its remixes with authors"
-        >
+    <VisualFrame caption="hover a descendant — its whole bloodline lights up.">
+      <div className="relative h-[360px]">
+        <svg viewBox="0 0 400 360" className="absolute inset-0 h-full w-full" role="img" aria-label="Remix bloodline">
+          <defs>
+            <radialGradient id="coreChrome" cx="35%" cy="30%" r="80%">
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="50%" stopColor="#d5d5de" />
+              <stop offset="100%" stopColor="#7d7d8a" />
+            </radialGradient>
+            <filter id="bloodGlow" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="5" />
+            </filter>
+          </defs>
           {NODES.filter((n) => n.parent).map((n) => {
-            const p = NODES.find((m) => m.id === n.parent)!;
-            const lit = hot && hot.has(n.id) && hot.has(p.id);
+            const isLit = lit.has(n.id) && lit.has(n.parent!);
             return (
               <path
                 key={n.id}
-                d={edgePath(p, n)}
+                d={edge(n)}
                 fill="none"
-                stroke={lit ? "#FFFFFF" : "rgba(255,255,255,0.14)"}
-                strokeWidth={lit ? 2.5 : 1.5}
-                className="transition-all duration-200"
+                stroke={isLit ? "#ffffff" : "rgba(255,255,255,0.14)"}
+                strokeWidth={isLit ? 2.4 : 1.2}
+                filter={isLit ? "url(#bloodGlow)" : undefined}
+                style={{ transition: "stroke 0.35s" }}
               />
             );
           })}
           {NODES.map((n) => {
-            const lit = !hot || hot.has(n.id);
-            const isRoot = n.parent === null;
+            const isLit = lit.has(n.id);
+            const isRoot = n.id === "root";
             return (
               <g
                 key={n.id}
-                onMouseEnter={() => setHovered(n.id)}
-                onMouseLeave={() => setHovered(null)}
+                onMouseEnter={() => setActive(n.id)}
+                onMouseLeave={() => setActive(null)}
                 className="cursor-pointer"
-                opacity={lit ? 1 : 0.35}
               >
-                <rect
-                  x={n.x}
-                  y={n.y}
-                  width={W}
-                  height={H}
-                  rx={10}
-                  fill={isRoot ? "#0D0D0D" : "#101014"}
-                  stroke={hot?.has(n.id) && hovered === n.id ? "#FFFFFF" : lit && isRoot ? "#FFFFFF" : "rgba(255,255,255,0.12)"}
-                  strokeWidth="1.5"
-                  className="transition-all duration-200"
-                />
-                {isRoot && (
-                  <circle cx={n.x + 16} cy={n.y + H / 2} r={4} fill="#FFFFFF" />
-                )}
-                <text
-                  x={n.x + (isRoot ? 28 : 14)}
-                  y={n.y + 25}
-                  fill="#F5F4F0"
-                  fontSize="12.5"
-                  fontFamily="Space Grotesk, sans-serif"
-                  fontWeight="600"
-                >
-                  {n.title}
-                </text>
-                <text
-                  x={n.x + (isRoot ? 28 : 14)}
-                  y={n.y + 44}
-                  fill="#A1A1AA"
-                  fontSize="10.5"
-                  fontFamily="JetBrains Mono, monospace"
-                >
-                  {n.author}
+                <circle cx={n.x} cy={n.y} r={isRoot ? 17 : isLit ? 12 : 9} fill={isRoot ? "url(#coreChrome)" : isLit ? "#ffffff" : "#17171b"}
+                  stroke="rgba(255,255,255,0.35)" strokeWidth="1"
+                  filter={isLit ? "url(#bloodGlow)" : undefined}
+                  style={{ transition: "all 0.35s" }} />
+                {/* generous hover target */}
+                <circle cx={n.x} cy={n.y} r="22" fill="transparent" />
+                <text x={n.x} y={n.y + (isRoot ? 32 : 26)} textAnchor="middle" fill={isLit ? "#ffffff" : "#9a9aa5"} fontSize="10" fontFamily="monospace">
+                  {n.label}
                 </text>
               </g>
             );

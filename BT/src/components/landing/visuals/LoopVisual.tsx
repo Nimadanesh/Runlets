@@ -1,108 +1,51 @@
 import { VisualFrame } from "./VisualFrame";
 
-const stages = [
-  "IDEA",
-  "CREATE",
-  "PUBLISH",
-  "PLAY",
-  "REMIX",
-  "IMPROVE",
-  "SHARE",
-  "REMIX AGAIN",
-];
-
-const R = 150;
-const C = 200;
-
 /**
- * Loop visual — the creation loop as a living orbit.
- * A pulse travels the circle; every lap can spawn another loop.
+ * Loop visual — the gyroscope.
+ * Your creation at the core; the community orbits it, polishing every pass.
  */
 export function LoopVisual() {
+  const rings = [
+    { size: 190, cls: "anim-spin-slow", border: "border-white/20", dots: 1 },
+    { size: 270, cls: "anim-spin-rev", border: "border-white/12", dots: 2 },
+    { size: 350, cls: "anim-spin-slower", border: "border-white/10", dots: 2 },
+  ];
   return (
-    <VisualFrame caption="every lap around the loop can start another loop.">
-      <div className="flex items-center justify-center px-6 py-10">
-        <svg
-          viewBox="0 0 400 400"
-          className="h-auto w-full max-w-[440px]"
-          role="img"
-          aria-label="Circular loop: idea, create, publish, play, remix, improve, share, remix again"
-        >
-          {/* orbit */}
-          <circle
-            cx={C}
-            cy={C}
-            r={R}
-            fill="none"
-            stroke="rgba(255,255,255,0.08)"
-            strokeWidth="1.5"
-          />
-          {/* traveling pulse */}
-          <circle
-            cx={C}
-            cy={C}
-            r={R}
-            fill="none"
-            stroke="#FFFFFF"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeDasharray="46 897"
-            className="v-orbit"
-            opacity="0.95"
-          />
-          {/* nodes */}
-          {stages.map((s, i) => {
-            const a = (i / stages.length) * Math.PI * 2 - Math.PI / 2;
-            const x = C + R * Math.cos(a);
-            const y = C + R * Math.sin(a);
-            const hot = s === "REMIX AGAIN";
-            return (
-              <g key={s}>
-                <circle
-                  cx={x}
-                  cy={y}
-                  r={hot ? 10 : 7}
-                  fill={hot ? "#FFFFFF" : "#101014"}
-                  stroke={hot ? "#FFFFFF" : "rgba(255,255,255,0.2)"}
-                  strokeWidth="1.5"
+    <VisualFrame caption="the loop never stops. every orbit polishes the core.">
+      <div className="relative flex h-[380px] items-center justify-center overflow-hidden">
+        <div
+          className="absolute h-64 w-64 rounded-full opacity-40 blur-3xl"
+          style={{ background: "radial-gradient(closest-side, rgba(237,237,242,0.45), transparent)" }}
+          aria-hidden
+        />
+        {rings.map((r, ri) => (
+          <div
+            key={ri}
+            className="absolute"
+            style={{ width: r.size, height: r.size, transform: "rotateX(66deg)" }}
+            aria-hidden
+          >
+            <div className={`${r.cls} absolute inset-0 rounded-full border ${r.border}`}>
+              {Array.from({ length: r.dots }).map((_, di) => (
+                <span
+                  key={di}
+                  className="absolute left-1/2 top-1/2 h-2.5 w-2.5 rounded-full bg-white"
+                  style={{
+                    boxShadow: "0 0 14px 5px rgba(237,237,242,0.5)",
+                    transform: `translate(-50%, -50%) rotate(${di * 180}deg) translateY(-${r.size / 2}px)`,
+                  }}
                 />
-                <text
-                  x={x}
-                  y={y - 20}
-                  textAnchor="middle"
-                  fill={hot ? "#FFFFFF" : "#A1A1AA"}
-                  fontSize="10.5"
-                  fontFamily="JetBrains Mono, monospace"
-                  letterSpacing="1"
-                >
-                  {s}
-                </text>
-              </g>
-            );
-          })}
-          {/* center */}
-          <text
-            x={C}
-            y={C - 6}
-            textAnchor="middle"
-            fill="#F5F4F0"
-            fontSize="17"
-            fontFamily="Space Grotesk, sans-serif"
-            fontWeight="600"
-          >
-            the loop
-          </text>
-          <text
-            x={C}
-            y={C + 18}
-            textAnchor="middle"
-            fill="#6E6E76"
-            fontSize="11"
-            fontFamily="JetBrains Mono, monospace"
-          >
-            make · share · remix · repeat
-          </text>
-        </svg>
+              ))}
+            </div>
+          </div>
+        ))}
+        {/* core */}
+        <div className="anim-float-y relative">
+          <div className="chrome-surface h-24 w-24 rounded-full shadow-[0_0_70px_-8px_rgba(237,237,242,0.6)] ring-1 ring-white/50" />
+          <p className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[11px] tracking-[0.2em] text-white/60">
+            your creation
+          </p>
+        </div>
       </div>
     </VisualFrame>
   );

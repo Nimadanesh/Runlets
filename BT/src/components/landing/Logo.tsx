@@ -15,7 +15,7 @@ export function Logo({ markHeight = 30, className = "" }: LogoProps) {
       aria-label="Runlets home"
     >
       <Image
-        src="/images/runlets-mark-mono.svg"
+        src="/images/runlets-mark-silver.svg"
         alt=""
         width={markWidth}
         height={markHeight}

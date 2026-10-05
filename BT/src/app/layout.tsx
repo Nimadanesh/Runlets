@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Inter, JetBrains_Mono, Unbounded } from "next/font/google";
 import "./globals.css";
 
-const display = Space_Grotesk({
+const display = Unbounded({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const body = Inter({
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   description:
     "Create with AI. Put it out there. Let other people play with it, remix it, and take it somewhere new.",
   icons: {
-    icon: "/images/runlets-mark.svg",
+    icon: "/images/runlets-mark-silver.svg",
   },
 };
 

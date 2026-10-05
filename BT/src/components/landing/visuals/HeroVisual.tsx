@@ -1,158 +1,174 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { VisualFrame } from "./VisualFrame";
 
-function MiniWindow({
-  title,
-  bars = 3,
-  tint = false,
-}: {
-  title: string;
-  bars?: number;
-  tint?: boolean;
-}) {
+const SIZE = 200;
+const HALF = SIZE / 2;
+
+const FACE_TRANSFORMS = [
+  `translateZ(${HALF}px)`,
+  `rotateY(180deg) translateZ(${HALF}px)`,
+  `rotateY(90deg) translateZ(${HALF}px)`,
+  `rotateY(-90deg) translateZ(${HALF}px)`,
+  `rotateX(90deg) translateZ(${HALF}px)`,
+  `rotateX(-90deg) translateZ(${HALF}px)`,
+];
+
+const FACES = [
+  { title: "your creation", sub: "the seed", hot: true },
+  { title: "remix — @sara", sub: "she played with it", hot: false },
+  { title: "fork — @kenji", sub: "he took it further", hot: false },
+  { title: "remix — @maya", sub: "she made it hers", hot: false },
+  { title: "runlets", sub: "spark", hot: true },
+  { title: "ship it", sub: "somewhere new", hot: false },
+];
+
+function Spark() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-10 w-10 text-white" fill="currentColor" aria-hidden>
+      <path d="M12 2c.7 6.5 2.5 8.3 9 9-6.5.7-8.3 2.5-9 9-.7-6.5-2.5-8.3-9-9 6.5-.7 8.3-2.5 9-9Z" />
+    </svg>
+  );
+}
+
+function FaceCard({ title, sub, hot }: { title: string; sub: string; hot: boolean }) {
   return (
     <div
-      className={`w-full rounded-lg border p-3 ${
-        tint ? "border-primary/40 bg-[#0D0D0D]" : "border-border bg-[#101014]"
+      className={`flex h-full w-full flex-col justify-between rounded-2xl border p-4 ${
+        hot ? "border-white/40 bg-white/[0.14]" : "border-white/15 bg-white/[0.05]"
       }`}
+      style={{ backdropFilter: "blur(8px)" }}
     >
-      <div className="flex gap-1">
-        <span className="h-1.5 w-1.5 rounded-full bg-border" />
-        <span className="h-1.5 w-1.5 rounded-full bg-border" />
-        <span
-          className={`h-1.5 w-1.5 rounded-full ${tint ? "bg-primary" : "bg-border"}`}
-        />
+      <div className="flex gap-1.5">
+        <span className="h-1.5 w-1.5 rounded-full bg-white/25" />
+        <span className="h-1.5 w-1.5 rounded-full bg-white/25" />
+        <span className={`h-1.5 w-1.5 rounded-full ${hot ? "bg-white" : "bg-white/25"}`} />
       </div>
-      <div className="mt-2.5 space-y-1.5">
-        {Array.from({ length: bars }).map((_, i) => (
-          <div
-            key={i}
-            className={`h-1.5 rounded-full ${
-              i === 0 && tint ? "bg-primary/70" : "bg-border"
-            }`}
-            style={{ width: `${88 - i * 22}%` }}
-          />
-        ))}
+      {sub === "spark" ? (
+        <div className="flex flex-1 items-center justify-center">
+          <Spark />
+        </div>
+      ) : (
+        <div className="space-y-2">
+          <div className={`h-2 rounded-full ${hot ? "bg-white/80" : "bg-white/30"}`} style={{ width: "82%" }} />
+          <div className="h-2 rounded-full bg-white/20" style={{ width: "58%" }} />
+          <div className="h-2 rounded-full bg-white/15" style={{ width: "70%" }} />
+        </div>
+      )}
+      <div>
+        <p className="font-mono text-[11px] font-medium text-white">{title}</p>
+        {sub !== "spark" && <p className="font-mono text-[10px] text-white/45">{sub}</p>}
       </div>
-      <p className="mt-2.5 font-mono text-[10px] leading-tight text-muted-foreground">
-        {title}
-      </p>
     </div>
   );
 }
 
 /**
- * Hero visual — the remix chain.
- * One creation on the left; white threads branch right into remixed variants,
- * with glow pulses traveling along each thread.
+ * Hero visual — the Remix Cube.
+ * A chrome cube of living creations: auto-spins, drag to spin it yourself.
+ * Resend has its spinning cube; this one is made of remixes.
  */
 export function HeroVisual() {
-  const variants = [
-    { title: "remix — by @sara", bars: 4, delay: "0s", rotate: "-rotate-2" },
-    { title: "remix — by @kenji", bars: 3, delay: "1.4s", rotate: "rotate-1" },
-    { title: "fork — by @maya", bars: 5, delay: "2.6s", rotate: "-rotate-1" },
-  ];
+  const cubeRef = useRef<HTMLDivElement>(null);
+  const rot = useRef({ x: -16, y: 28 });
+  const vel = useRef({ x: 0, y: 0 });
+  const dragging = useRef(false);
+  const last = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    let raf = 0;
+    let prev = performance.now();
+    const loop = (t: number) => {
+      const dt = Math.min(64, t - prev);
+      prev = t;
+      if (!dragging.current) {
+        if (Math.abs(vel.current.x) + Math.abs(vel.current.y) > 0.02) {
+          rot.current.x = Math.max(-75, Math.min(75, rot.current.x + vel.current.y * dt * 0.02));
+          rot.current.y += vel.current.x * dt * 0.02;
+          vel.current.x *= 0.955;
+          vel.current.y *= 0.955;
+        } else {
+          rot.current.y = (rot.current.y + dt * 0.016) % 360;
+        }
+      }
+      if (cubeRef.current) {
+        cubeRef.current.style.transform = `rotateX(${rot.current.x}deg) rotateY(${rot.current.y}deg)`;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   return (
-    <VisualFrame caption="one creation in — many versions out. the thread is the product.">
-      <div className="relative h-[380px] overflow-hidden md:h-[440px]">
-        {/* ambient warmth behind the origin */}
+    <VisualFrame caption="every face is a version. spin it — the thread is the product.">
+      <div
+        className="relative h-[460px] cursor-grab touch-none select-none overflow-hidden active:cursor-grabbing md:h-[540px]"
+        onPointerDown={(e) => {
+          dragging.current = true;
+          last.current = { x: e.clientX, y: e.clientY };
+          vel.current = { x: 0, y: 0 };
+          e.currentTarget.setPointerCapture(e.pointerId);
+        }}
+        onPointerMove={(e) => {
+          if (!dragging.current) return;
+          const dx = e.clientX - last.current.x;
+          const dy = e.clientY - last.current.y;
+          last.current = { x: e.clientX, y: e.clientY };
+          rot.current.x = Math.max(-75, Math.min(75, rot.current.x - dy * 0.4));
+          rot.current.y += dx * 0.4;
+          vel.current = { x: dx * 0.4, y: -dy * 0.4 };
+        }}
+        onPointerUp={() => { dragging.current = false; }}
+        onPointerCancel={() => { dragging.current = false; }}
+      >
+        {/* floor glow */}
         <div
-          className="absolute left-0 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full opacity-20"
-          style={{
-            background:
-              "radial-gradient(closest-side, #FFFFFF 0%, transparent 70%)",
-          }}
+          className="absolute left-1/2 top-[68%] h-40 w-[420px] -translate-x-1/2 rounded-full opacity-40 blur-3xl"
+          style={{ background: "radial-gradient(closest-side, rgba(237,237,242,0.5), transparent)" }}
           aria-hidden
         />
-        {/* threads */}
-        <svg
-          className="absolute inset-0 h-full w-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden
-        >
-          <path
-            d="M22 50 C 42 50, 55 18, 80 18"
-            fill="none"
-            stroke="#FFFFFF"
-            strokeWidth="1.6"
-            strokeDasharray="5 5"
-            className="v-dash"
-            vectorEffect="non-scaling-stroke"
-            opacity="0.65"
-          />
-          <path
-            d="M22 50 C 45 50, 55 50, 80 50"
-            fill="none"
-            stroke="#FFFFFF"
-            strokeWidth="1.6"
-            strokeDasharray="5 5"
-            className="v-dash"
-            vectorEffect="non-scaling-stroke"
-            opacity="0.9"
-          />
-          <path
-            d="M22 50 C 42 50, 55 82, 80 82"
-            fill="none"
-            stroke="#FFFFFF"
-            strokeWidth="1.6"
-            strokeDasharray="5 5"
-            className="v-dash"
-            vectorEffect="non-scaling-stroke"
-            opacity="0.65"
-          />
-        </svg>
-        {/* traveling glow pulses along the threads */}
-        <svg
-          className="absolute inset-0 h-full w-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden
-        >
-          <defs>
-            <filter
-              id="heroGlowDot"
-              x="-80%"
-              y="-80%"
-              width="260%"
-              height="260%"
-            >
-              <feGaussianBlur stdDeviation="1.6" />
-            </filter>
-          </defs>
-          {[
-            { d: "M22 50 C 42 50, 55 18, 80 18", dur: "4.5s" },
-            { d: "M22 50 C 45 50, 55 50, 80 50", dur: "5.6s" },
-            { d: "M22 50 C 42 50, 55 82, 80 82", dur: "6.8s" },
-          ].map((t, i) => (
-            <g key={i} filter="url(#heroGlowDot)">
-              <circle r="1.5" fill="#FFFFFF" opacity="0.95">
-                <animateMotion
-                  dur={t.dur}
-                  repeatCount="indefinite"
-                  path={t.d}
-                />
-              </circle>
-            </g>
-          ))}
-        </svg>
-        {/* origin card */}
-        <div className="absolute left-6 top-1/2 w-40 -translate-y-1/2 md:left-12 md:w-48">
-          <div className="v-float" style={{ animationDelay: "0.6s" }}>
-            <MiniWindow title="your creation" bars={3} tint />
+        {/* orbit ring */}
+        <div className="absolute left-1/2 top-1/2 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2 md:h-[400px] md:w-[400px]" aria-hidden>
+          <div className="absolute inset-0" style={{ transform: "rotateX(72deg)" }}>
+            <div className="anim-spin-slow absolute inset-0 rounded-full border border-white/15">
+              <span className="absolute left-1/2 top-0 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_18px_6px_rgba(255,255,255,0.55)]" />
+            </div>
           </div>
         </div>
-        {/* remixed variants */}
-        <div className="absolute inset-y-8 right-6 flex w-36 flex-col justify-between md:right-12 md:w-44">
-          {variants.map((v) => (
+        {/* the cube */}
+        <div
+          className="absolute left-1/2 top-1/2"
+          style={{ perspective: "1100px", transform: "translate(-50%, -52%)" }}
+        >
+          <div className="anim-float-y">
             <div
-              key={v.title}
-              className={`v-float ${v.rotate}`}
-              style={{ animationDelay: v.delay }}
+              ref={cubeRef}
+              className="relative"
+              style={{
+                width: SIZE,
+                height: SIZE,
+                transformStyle: "preserve-3d",
+                transform: "rotateX(-16deg) rotateY(28deg)",
+              }}
             >
-              <MiniWindow title={v.title} bars={v.bars} />
+              {FACES.map((f, i) => (
+                <div
+                  key={f.title}
+                  className="absolute inset-0"
+                  style={{ transform: FACE_TRANSFORMS[i] }}
+                >
+                  <FaceCard title={f.title} sub={f.sub} hot={f.hot} />
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
+        {/* hint */}
+        <p className="absolute bottom-5 left-1/2 -translate-x-1/2 font-mono text-[11px] tracking-[0.2em] text-white/35">
+          — drag to spin —
+        </p>
       </div>
     </VisualFrame>
   );

@@ -1,99 +1,49 @@
 import { VisualFrame } from "./VisualFrame";
 
-function Glyph({ children }: { children: React.ReactNode }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className="h-10 w-10"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      {children}
-    </svg>
-  );
-}
-
-const stages = [
-  {
-    label: "Play",
-    glyph: (
-      <Glyph>
-        <circle cx="12" cy="12" r="9" />
-        <path d="M10 8.5v7l6-3.5z" fill="currentColor" stroke="none" />
-      </Glyph>
-    ),
-  },
-  {
-    label: "Remix",
-    glyph: (
-      <Glyph>
-        <circle cx="9" cy="12" r="6" />
-        <circle cx="15" cy="12" r="6" className="text-primary" />
-      </Glyph>
-    ),
-  },
-  {
-    label: "Fork",
-    glyph: (
-      <Glyph>
-        <path d="M12 3v6" />
-        <path d="M12 9c-5 0-6 4-6 9" className="text-primary" />
-        <path d="M12 9c5 0 6 4 6 9" />
-        <circle cx="6" cy="20" r="1.4" fill="currentColor" stroke="none" />
-        <circle cx="18" cy="20" r="1.4" fill="currentColor" stroke="none" />
-      </Glyph>
-    ),
-  },
-  {
-    label: "Improve",
-    glyph: (
-      <Glyph>
-        <path d="M12 4c.9 4.5 2.6 6.2 7.1 7.1-4.5.9-6.2 2.6-7.1 7.1-.9-4.5-2.6-6.2-7.1-7.1 4.5-.9 6.2-2.6 7.1-7.1Z" className="text-primary" />
-      </Glyph>
-    ),
-  },
-  {
-    label: "Build on it",
-    glyph: (
-      <Glyph>
-        <rect x="4" y="4" width="16" height="16" rx="4" />
-        <path d="M12 16V8m0 0l-3.5 3.5M12 8l3.5 3.5" className="text-primary" />
-      </Glyph>
-    ),
-  },
-];
+const STAGES = ["play", "remix", "fork", "improve", "build"];
 
 /**
- * What-is visual — the pipeline.
- * A creation visibly transforms as it moves Play → Remix → Fork → Improve → Build.
+ * Pipeline visual — the chrome pipeline.
+ * A glass tube; orbs of light flow through the five stations.
  */
 export function PipelineVisual() {
   return (
-    <VisualFrame caption="the same spark, five stages later — unrecognizable, and that's the point.">
-      <div className="overflow-x-auto px-6 py-10">
-        <div className="flex min-w-[640px] items-stretch justify-between gap-2">
-          {stages.map((s, i) => (
-            <div key={s.label} className="flex flex-1 items-center gap-2">
-              <div className="flex flex-1 flex-col items-center gap-3 rounded-xl border border-border bg-[#101014] px-3 py-6 text-muted-foreground">
-                {s.glyph}
-                <p className="font-mono text-xs text-foreground">{s.label}</p>
-              </div>
-              {i < stages.length - 1 && (
-                <svg
-                  viewBox="0 0 16 24"
-                  className="h-6 w-4 shrink-0 text-primary"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  aria-hidden
-                >
-                  <path d="M3 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              )}
+    <VisualFrame caption="five stations, one flow. every pass polishes.">
+      <div className="relative px-6 py-12 md:px-12">
+        {/* tube */}
+        <div className="glass-panel relative h-20 overflow-hidden rounded-full">
+          <div
+            className="absolute inset-x-6 top-2 h-4 rounded-full opacity-60"
+            style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.35), transparent)" }}
+            aria-hidden
+          />
+          {/* flowing orbs */}
+          {[0, 1, 2].map((i) => (
+            <span
+              key={i}
+              className="absolute inset-y-0 left-0 right-0"
+              style={{ animation: `shimmer-x ${4 + i * 1.3}s linear ${-i * 1.7}s infinite` }}
+              aria-hidden
+            >
+              <span
+                className="absolute top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-white"
+                style={{ boxShadow: "0 0 22px 8px rgba(237,237,242,0.55)" }}
+              />
+            </span>
+          ))}
+        </div>
+        {/* stations */}
+        <div className="relative mt-2 flex justify-between">
+          {STAGES.map((s, i) => (
+            <div key={s} className="flex flex-col items-center gap-3" style={{ width: "18%" }}>
+              <span
+                className={`h-3.5 w-3.5 rounded-full ${
+                  i === STAGES.length - 1
+                    ? "bg-white shadow-[0_0_16px_5px_rgba(255,255,255,0.5)]"
+                    : "border border-white/40 bg-white/10"
+                }`}
+              />
+              <span className="font-mono text-[11px] tracking-[0.18em] text-white/55">{s}</span>
             </div>
           ))}
         </div>

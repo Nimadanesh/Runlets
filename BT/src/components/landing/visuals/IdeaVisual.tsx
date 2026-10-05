@@ -1,78 +1,54 @@
 import { VisualFrame } from "./VisualFrame";
 
-const cards = [
-  { left: "6%", top: "12%", rotate: "-rotate-6", delay: "0s", label: "lesson" },
-  { left: "22%", top: "58%", rotate: "rotate-3", delay: "1.1s", label: "story" },
-  { left: "42%", top: "8%", rotate: "rotate-6", delay: "2s", label: "tool" },
-  { left: "58%", top: "62%", rotate: "-rotate-3", delay: "0.5s", label: "game" },
-  { left: "74%", top: "14%", rotate: "rotate-2", delay: "1.7s", label: "toy" },
-  { left: "84%", top: "56%", rotate: "-rotate-6", delay: "2.4s", label: "demo" },
+const DOTS = [
+  [36, 40], [70, 26], [110, 52], [52, 92], [96, 120], [30, 160],
+  [64, 200], [110, 236], [36, 268], [150, 36], [196, 24], [250, 44],
+  [300, 70], [330, 120], [348, 180], [330, 240], [296, 280], [240, 296],
+  [160, 292], [96, 292],
 ];
 
 /**
- * Idea visual — scattered creations converge toward a single warm point.
+ * Idea visual — starfall into the ring.
+ * Scattered sparks of AI-made things stream into the Runlets ring.
  */
 export function IdeaVisual() {
+  const cx = 200;
+  const cy = 160;
   return (
-    <VisualFrame caption="scattered creations, drifting — until they find somewhere to go.">
-      <div className="relative h-[320px] overflow-hidden md:h-[360px]">
-        {/* converging dotted paths */}
-        <svg
-          className="absolute inset-0 h-full w-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
+    <VisualFrame caption="scattered sparks, one ring. runlets pulls them together.">
+      <div className="relative h-[320px] overflow-hidden">
+        <div
+          className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 blur-3xl"
+          style={{ background: "radial-gradient(closest-side, rgba(237,237,242,0.4), transparent)" }}
           aria-hidden
-        >
-          {[
-            "M12 22 C 30 30, 38 40, 50 50",
-            "M28 68 C 36 62, 42 56, 50 50",
-            "M48 16 C 49 28, 49 38, 50 50",
-            "M64 72 C 60 64, 55 57, 50 50",
-            "M80 24 C 70 32, 60 40, 50 50",
-            "M90 66 C 76 60, 62 55, 50 50",
-          ].map((d) => (
-            <path
-              key={d}
-              d={d}
-              fill="none"
-              stroke="#A1A1AA"
-              strokeWidth="1"
-              strokeDasharray="2 4"
-              opacity="0.4"
-              vectorEffect="non-scaling-stroke"
-            />
+        />
+        <svg viewBox="0 0 400 320" className="absolute inset-0 h-full w-full" aria-hidden>
+          <defs>
+            <radialGradient id="ringChrome" cx="35%" cy="30%" r="80%">
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="45%" stopColor="#c9c9d4" />
+              <stop offset="100%" stopColor="#6f6f7b" />
+            </radialGradient>
+            <filter id="ringGlow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="10" />
+            </filter>
+          </defs>
+          {DOTS.map(([x, y], i) => (
+            <circle key={i} r={2.6} fill="#ffffff" opacity="0.9">
+              <animateMotion
+                dur={`${2.6 + (i % 5) * 0.5}s`}
+                begin={`-${(i * 0.7) % 3}s`}
+                repeatCount="indefinite"
+                path={`M ${x} ${y} L ${cx} ${cy}`}
+              />
+              <animate attributeName="opacity" values="0.9;0.9;0" dur={`${2.6 + (i % 5) * 0.5}s`} begin={`-${(i * 0.7) % 3}s`} repeatCount="indefinite" />
+            </circle>
           ))}
+          <circle cx={cx} cy={cy} r="46" fill="none" stroke="url(#ringChrome)" strokeWidth="10" filter="url(#ringGlow)" opacity="0.7" />
+          <circle cx={cx} cy={cy} r="46" fill="none" stroke="url(#ringChrome)" strokeWidth="7" />
+          <circle cx={cx} cy={cy} r="30" fill="#0d0d10" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
+          <text x={cx} y={cy + 4} textAnchor="middle" fill="#ededf2" fontSize="11" fontFamily="monospace" letterSpacing="2">runlets</text>
         </svg>
-        {/* the warm point */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div
-            className="v-pulse-soft h-16 w-16 rounded-full"
-            style={{
-              background:
-                "radial-gradient(closest-side, #FFFFFF 0%, rgba(255,178,36,0.25) 55%, transparent 72%)",
-            }}
-            aria-hidden
-          />
-          <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
-            runlets
-          </p>
-        </div>
-        {/* drifting creations */}
-        {cards.map((c) => (
-          <div
-            key={c.label}
-            className={`v-float absolute w-24 ${c.rotate}`}
-            style={{ left: c.left, top: c.top, animationDelay: c.delay }}
-          >
-            <div className="rounded-lg border border-border bg-[#101014] p-2.5">
-              <div className="h-1.5 w-3/4 rounded-full bg-border" />
-              <div className="mt-1.5 h-1.5 w-1/2 rounded-full bg-border" />
-              <p className="mt-2 font-mono text-[10px] text-muted-foreground">
-                {c.label}
-              </p>
-            </div>
-          </div>
-        ))}
       </div>
     </VisualFrame>
   );

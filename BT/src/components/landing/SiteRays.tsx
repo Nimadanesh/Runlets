@@ -38,7 +38,7 @@ export function SiteRays() {
         className="absolute inset-x-0 top-[560px] h-[200px]"
         style={{
           background:
-            "linear-gradient(180deg, transparent, #000000 90%)",
+            "linear-gradient(180deg, transparent, #070709 90%)",
         }}
       />
     </div>
