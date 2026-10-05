@@ -49,7 +49,7 @@ export function IdeaVisual() {
             className="v-pulse-soft h-16 w-16 rounded-full"
             style={{
               background:
-                "radial-gradient(closest-side, #FFB224 0%, rgba(255,178,36,0.25) 55%, transparent 72%)",
+                "radial-gradient(closest-side, #FFFFFF 0%, rgba(255,178,36,0.25) 55%, transparent 72%)",
             }}
             aria-hidden
           />

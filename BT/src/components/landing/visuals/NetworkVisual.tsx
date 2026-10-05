@@ -64,7 +64,7 @@ export function NetworkVisual() {
                 cy={y}
                 r="16"
                 fill="none"
-                stroke="#FFB224"
+                stroke="#FFFFFF"
                 strokeWidth="1"
                 opacity="0.5"
                 className="v-pulse-soft"
@@ -77,14 +77,14 @@ export function NetworkVisual() {
               width="18"
               height="18"
               rx="5"
-              fill={hot ? "#FFB224" : "#16161C"}
-              stroke={hot ? "#FFB224" : "rgba(255,255,255,0.2)"}
+              fill={hot ? "#FFFFFF" : "#16161C"}
+              stroke={hot ? "#FFFFFF" : "rgba(255,255,255,0.2)"}
               strokeWidth="1.5"
             />
             {hot && (
               <path
                 d={`M${x} ${y - 4}c.4 2.4 1.1 3.1 3.5 3.5-2.4.4-3.1 1.1-3.5 3.5-.4-2.4-1.1-3.1-3.5-3.5 2.4-.4 3.1-1.1 3.5-3.5Z`}
-                fill="#1A1206"
+                fill="#000000"
               />
             )}
           </g>

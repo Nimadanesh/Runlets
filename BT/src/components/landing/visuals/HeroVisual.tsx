@@ -12,7 +12,7 @@ function MiniWindow({
   return (
     <div
       className={`w-full rounded-lg border p-3 ${
-        tint ? "border-primary/40 bg-[#141007]" : "border-border bg-[#101014]"
+        tint ? "border-primary/40 bg-[#0D0D0D]" : "border-border bg-[#101014]"
       }`}
     >
       <div className="flex gap-1">
@@ -58,7 +58,7 @@ export function HeroVisual() {
           className="absolute left-0 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full opacity-20"
           style={{
             background:
-              "radial-gradient(closest-side, #FFB224 0%, transparent 70%)",
+              "radial-gradient(closest-side, #FFFFFF 0%, transparent 70%)",
           }}
           aria-hidden
         />
@@ -72,7 +72,7 @@ export function HeroVisual() {
           <path
             d="M22 50 C 42 50, 55 18, 80 18"
             fill="none"
-            stroke="#FFB224"
+            stroke="#FFFFFF"
             strokeWidth="1.6"
             strokeDasharray="5 5"
             className="v-dash"
@@ -82,7 +82,7 @@ export function HeroVisual() {
           <path
             d="M22 50 C 45 50, 55 50, 80 50"
             fill="none"
-            stroke="#FFB224"
+            stroke="#FFFFFF"
             strokeWidth="1.6"
             strokeDasharray="5 5"
             className="v-dash"
@@ -92,7 +92,7 @@ export function HeroVisual() {
           <path
             d="M22 50 C 42 50, 55 82, 80 82"
             fill="none"
-            stroke="#FFB224"
+            stroke="#FFFFFF"
             strokeWidth="1.6"
             strokeDasharray="5 5"
             className="v-dash"

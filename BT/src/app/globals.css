@@ -49,75 +49,75 @@
   --radius-4xl: 1rem;
 }
 
-/* Runlets — dark-first design system. :root carries the dark values. */
+/* Runlets — template-resend variant: resend-style dark-gloss monochrome. */
 :root {
-  --background: #08090a;
-  --foreground: #f5f4f0;
-  --card: #101014;
-  --card-foreground: #f5f4f0;
-  --popover: #16161c;
-  --popover-foreground: #f5f4f0;
-  --primary: #ffb224;
-  --primary-foreground: #1a1206;
-  --secondary: #16161c;
-  --secondary-foreground: #f5f4f0;
-  --muted: #101014;
-  --muted-foreground: #a1a1aa;
-  --accent: #ffb224;
-  --accent-foreground: #1a1206;
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --popover: #111111;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #111111;
+  --secondary-foreground: #ffffff;
+  --muted: #0a0a0a;
+  --muted-foreground: #8a8a93;
+  --accent: #ffffff;
+  --accent-foreground: #000000;
   --destructive: oklch(0.704 0.191 22.216);
   --border: rgba(255, 255, 255, 0.08);
   --input: rgba(255, 255, 255, 0.12);
-  --ring: #ffb224;
-  --chart-1: #ffb224;
-  --chart-2: #a1a1aa;
-  --chart-3: #6e6e76;
-  --chart-4: #3a3a42;
-  --chart-5: #26272e;
+  --ring: #ffffff;
+  --chart-1: #ffffff;
+  --chart-2: #8a8a93;
+  --chart-3: #55555e;
+  --chart-4: #2c2c32;
+  --chart-5: #1a1a1e;
   --radius: 0.75rem;
-  --sidebar: #101014;
-  --sidebar-foreground: #f5f4f0;
-  --sidebar-primary: #ffb224;
-  --sidebar-primary-foreground: #1a1206;
-  --sidebar-accent: #16161c;
-  --sidebar-accent-foreground: #f5f4f0;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #111111;
+  --sidebar-accent-foreground: #ffffff;
   --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-ring: #ffb224;
+  --sidebar-ring: #ffffff;
 }
 
 /* Dark-only: .dark mirrors :root so `dark:` variants stay consistent. */
 .dark {
-  --background: #08090a;
-  --foreground: #f5f4f0;
-  --card: #101014;
-  --card-foreground: #f5f4f0;
-  --popover: #16161c;
-  --popover-foreground: #f5f4f0;
-  --primary: #ffb224;
-  --primary-foreground: #1a1206;
-  --secondary: #16161c;
-  --secondary-foreground: #f5f4f0;
-  --muted: #101014;
-  --muted-foreground: #a1a1aa;
-  --accent: #ffb224;
-  --accent-foreground: #1a1206;
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --popover: #111111;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #111111;
+  --secondary-foreground: #ffffff;
+  --muted: #0a0a0a;
+  --muted-foreground: #8a8a93;
+  --accent: #ffffff;
+  --accent-foreground: #000000;
   --destructive: oklch(0.704 0.191 22.216);
   --border: rgba(255, 255, 255, 0.08);
   --input: rgba(255, 255, 255, 0.12);
-  --ring: #ffb224;
-  --chart-1: #ffb224;
-  --chart-2: #a1a1aa;
-  --chart-3: #6e6e76;
-  --chart-4: #3a3a42;
-  --chart-5: #26272e;
-  --sidebar: #101014;
-  --sidebar-foreground: #f5f4f0;
-  --sidebar-primary: #ffb224;
-  --sidebar-primary-foreground: #1a1206;
-  --sidebar-accent: #16161c;
-  --sidebar-accent-foreground: #f5f4f0;
+  --ring: #ffffff;
+  --chart-1: #ffffff;
+  --chart-2: #8a8a93;
+  --chart-3: #55555e;
+  --chart-4: #2c2c32;
+  --chart-5: #1a1a1e;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #111111;
+  --sidebar-accent-foreground: #ffffff;
   --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-ring: #ffb224;
+  --sidebar-ring: #ffffff;
 }
 
 @layer base {
@@ -131,9 +131,35 @@
     @apply font-sans;
   }
   ::selection {
-    background: #ffb224;
-    color: #1a1206;
+    background: #ffffff;
+    color: #000000;
   }
+}
+
+/* Gloss — the resend-style sheen: a soft top-light wash over panels. */
+.gloss {
+  position: relative;
+}
+.gloss::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.075) 0%,
+    rgba(255, 255, 255, 0.02) 28%,
+    transparent 55%
+  );
+}
+.gloss-deep::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
 }
 
 @media (prefers-reduced-motion: reduce) {

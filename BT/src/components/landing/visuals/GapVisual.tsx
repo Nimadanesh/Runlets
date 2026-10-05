@@ -40,15 +40,15 @@ export function GapVisual() {
             width="210"
             height="34"
             rx="17"
-            fill="#FFB224"
+            fill="#FFFFFF"
           />
-          <rect x="318" y="162" width="10" height="60" fill="#8a5c10" opacity="0.6" />
-          <rect x="472" y="162" width="10" height="60" fill="#8a5c10" opacity="0.6" />
+          <rect x="318" y="162" width="10" height="60" fill="#3A3A3A" opacity="0.6" />
+          <rect x="472" y="162" width="10" height="60" fill="#3A3A3A" opacity="0.6" />
           <text
             x="400"
             y="150"
             textAnchor="middle"
-            fill="#1A1206"
+            fill="#000000"
             fontSize="15"
             fontFamily="JetBrains Mono, monospace"
             fontWeight="600"

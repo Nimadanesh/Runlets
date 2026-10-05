@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/landing/SiteFooter";
 import { SiteHeader } from "@/components/landing/SiteHeader";
+import { SiteRays } from "@/components/landing/SiteRays";
 import {
   BigIdeaSection,
   FinalCtaSection,
@@ -18,7 +19,8 @@ import {
 
 export default function Home() {
   return (
-    <>
+    <div className="relative overflow-x-clip">
+      <SiteRays />
       <SiteHeader />
       <main>
         <HeroSection />
@@ -36,6 +38,6 @@ export default function Home() {
         <FinalCtaSection />
       </main>
       <SiteFooter />
-    </>
+    </div>
   );
 }

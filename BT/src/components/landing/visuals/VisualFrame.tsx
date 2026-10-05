@@ -11,7 +11,7 @@ export function VisualFrame({ children, caption, className }: VisualFrameProps) 
   return (
     <figure
       className={cn(
-        "overflow-hidden rounded-xl border border-border bg-card",
+        "gloss gloss-deep overflow-hidden rounded-xl border border-border bg-card",
         className,
       )}
     >

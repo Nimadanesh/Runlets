@@ -43,7 +43,7 @@ export function LoopVisual() {
             cy={C}
             r={R}
             fill="none"
-            stroke="#FFB224"
+            stroke="#FFFFFF"
             strokeWidth="3"
             strokeLinecap="round"
             strokeDasharray="46 897"
@@ -62,15 +62,15 @@ export function LoopVisual() {
                   cx={x}
                   cy={y}
                   r={hot ? 10 : 7}
-                  fill={hot ? "#FFB224" : "#101014"}
-                  stroke={hot ? "#FFB224" : "rgba(255,255,255,0.2)"}
+                  fill={hot ? "#FFFFFF" : "#101014"}
+                  stroke={hot ? "#FFFFFF" : "rgba(255,255,255,0.2)"}
                   strokeWidth="1.5"
                 />
                 <text
                   x={x}
                   y={y - 20}
                   textAnchor="middle"
-                  fill={hot ? "#FFB224" : "#A1A1AA"}
+                  fill={hot ? "#FFFFFF" : "#A1A1AA"}
                   fontSize="10.5"
                   fontFamily="JetBrains Mono, monospace"
                   letterSpacing="1"

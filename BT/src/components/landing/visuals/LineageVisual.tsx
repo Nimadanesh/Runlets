@@ -69,7 +69,7 @@ export function LineageVisual() {
                 key={n.id}
                 d={edgePath(p, n)}
                 fill="none"
-                stroke={lit ? "#FFB224" : "rgba(255,255,255,0.14)"}
+                stroke={lit ? "#FFFFFF" : "rgba(255,255,255,0.14)"}
                 strokeWidth={lit ? 2.5 : 1.5}
                 className="transition-all duration-200"
               />
@@ -92,13 +92,13 @@ export function LineageVisual() {
                   width={W}
                   height={H}
                   rx={10}
-                  fill={isRoot ? "#141007" : "#101014"}
-                  stroke={hot?.has(n.id) && hovered === n.id ? "#FFB224" : lit && isRoot ? "#FFB224" : "rgba(255,255,255,0.12)"}
+                  fill={isRoot ? "#0D0D0D" : "#101014"}
+                  stroke={hot?.has(n.id) && hovered === n.id ? "#FFFFFF" : lit && isRoot ? "#FFFFFF" : "rgba(255,255,255,0.12)"}
                   strokeWidth="1.5"
                   className="transition-all duration-200"
                 />
                 {isRoot && (
-                  <circle cx={n.x + 16} cy={n.y + H / 2} r={4} fill="#FFB224" />
+                  <circle cx={n.x + 16} cy={n.y + H / 2} r={4} fill="#FFFFFF" />
                 )}
                 <text
                   x={n.x + (isRoot ? 28 : 14)}

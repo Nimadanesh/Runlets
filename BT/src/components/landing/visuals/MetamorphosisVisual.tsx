@@ -52,9 +52,9 @@ const stages = [
     note: "now it's real",
     glyph: (
       <Glyph>
-        <rect x="12" y="12" width="40" height="40" rx="10" fill="#FFB224" stroke="none" opacity="0.16" />
+        <rect x="12" y="12" width="40" height="40" rx="10" fill="#FFFFFF" stroke="none" opacity="0.16" />
         <rect x="12" y="12" width="40" height="40" rx="10" className="text-primary" />
-        <path d="M32 22c.8 6 2.8 8 8.8 8.8-6 .8-8 2.8-8.8 8.8-.8-6-2.8-8-8.8-8.8 6-.8 8-2.8 8.8-8.8Z" fill="#FFB224" stroke="none" />
+        <path d="M32 22c.8 6 2.8 8 8.8 8.8-6 .8-8 2.8-8.8 8.8-.8-6-2.8-8-8.8-8.8 6-.8 8-2.8 8.8-8.8Z" fill="#FFFFFF" stroke="none" />
       </Glyph>
     ),
   },
