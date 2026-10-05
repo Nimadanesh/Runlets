@@ -1,0 +1,19 @@
+# Dependencies
+BT/node_modules/
+
+# Next.js build output
+BT/.next/
+BT/out/
+
+# Misc
+BT/*.tsbuildinfo
+BT/next-env.d.ts
+.DS_Store
+
+# Env (never commit secrets)
+BT/.env*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*

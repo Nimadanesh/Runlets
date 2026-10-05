@@ -1,11 +1,41 @@
+import { SiteFooter } from "@/components/landing/SiteFooter";
+import { SiteHeader } from "@/components/landing/SiteHeader";
+import {
+  BigIdeaSection,
+  FinalCtaSection,
+  HeroSection,
+  HowItWorksSection,
+  IdeaSection,
+  LineageSection,
+  LoopSection,
+  NetworkSection,
+  NotOnlyDevsSection,
+  ProblemSection,
+  SmallIdeaSection,
+  WhatIsSection,
+  WhoSection,
+} from "@/components/landing/sections";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <p className="text-muted-foreground">
-        BASE-TEMPLATE ready. Fill{" "}
-        <code className="font-mono text-foreground">docs/project-brief.md</code>{" "}
-        and start vibe coding.
-      </p>
-    </main>
+    <>
+      <SiteHeader />
+      <main>
+        <HeroSection />
+        <IdeaSection />
+        <ProblemSection />
+        <WhatIsSection />
+        <HowItWorksSection />
+        <LoopSection />
+        <LineageSection />
+        <SmallIdeaSection />
+        <WhoSection />
+        <NotOnlyDevsSection />
+        <NetworkSection />
+        <BigIdeaSection />
+        <FinalCtaSection />
+      </main>
+      <SiteFooter />
+    </>
   );
 }
